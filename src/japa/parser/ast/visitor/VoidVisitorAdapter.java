@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Júlio Vilmar Gesser.
+ * Copyright (C) 2008 Jï¿½lio Vilmar Gesser.
  * 
  * This file is part of Java 1.5 parser and Abstract Syntax Tree.
  *
@@ -48,6 +48,7 @@ import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.ArrayAccessExpr;
 import japa.parser.ast.expr.ArrayCreationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
+import japa.parser.ast.expr.ArraySliceExpr;
 import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.BinaryExpr;
 import japa.parser.ast.expr.BooleanLiteralExpr;
@@ -146,6 +147,16 @@ public abstract class VoidVisitorAdapter<A> implements VoidVisitor<A> {
     public void visit(ArrayAccessExpr n, A arg) {
         n.getName().accept(this, arg);
         n.getIndex().accept(this, arg);
+    }
+    
+    public void visit(ArraySliceExpr n, A arg) {
+        n.getName().accept(this, arg);
+        
+        Expression si = n.getStartIndex();
+        if (si != null) si.accept(this, arg);
+        
+        Expression ei = n.getEndIndex();
+        if (ei != null) ei.accept(this, arg);
     }
 
     public void visit(ArrayCreationExpr n, A arg) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Júlio Vilmar Gesser.
+ * Copyright (C) 2007 Jï¿½lio Vilmar Gesser.
  * 
  * This file is part of Java 1.5 parser and Abstract Syntax Tree.
  *
@@ -45,6 +45,7 @@ import japa.parser.ast.body.VariableDeclaratorId;
 import japa.parser.ast.expr.ArrayAccessExpr;
 import japa.parser.ast.expr.ArrayCreationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
+import japa.parser.ast.expr.ArraySliceExpr;
 import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.BinaryExpr;
 import japa.parser.ast.expr.BooleanLiteralExpr;
@@ -167,6 +168,8 @@ public interface GenericVisitor<R, A> {
     //- Expression ----------------------------------------
 
     public R visit(ArrayAccessExpr n, A arg);
+    
+    public R visit(ArraySliceExpr n, A arg);
 
     public R visit(ArrayCreationExpr n, A arg);
 

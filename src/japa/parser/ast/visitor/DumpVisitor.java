@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Júlio Vilmar Gesser.
+ * Copyright (C) 2007 Jï¿½lio Vilmar Gesser.
  * 
  * This file is part of Java 1.5 parser and Abstract Syntax Tree.
  *
@@ -49,6 +49,7 @@ import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.ArrayAccessExpr;
 import japa.parser.ast.expr.ArrayCreationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
+import japa.parser.ast.expr.ArraySliceExpr;
 import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.BinaryExpr;
 import japa.parser.ast.expr.BooleanLiteralExpr;
@@ -293,6 +294,7 @@ public final class DumpVisitor implements VoidVisitor<Object> {
             }
             printer.printLn();
         }
+        
         if (n.getTypes() != null) {
             for (Iterator<TypeDeclaration> i = n.getTypes().iterator(); i.hasNext();) {
                 i.next().accept(this, arg);
@@ -520,6 +522,31 @@ public final class DumpVisitor implements VoidVisitor<Object> {
         printer.print("[");
         n.getIndex().accept(this, arg);
         printer.print("]");
+    }
+    
+    public void visit(ArraySliceExpr n, Object arg) {
+    	printer.print("java.util.Arrays.copyOfRange(");
+        n.getName().accept(this, arg);
+        printer.print(", ");
+        
+        Expression startIndex = n.getStartIndex();
+        if (startIndex != null) {
+        	startIndex.accept(this, arg);
+        } else {
+        	printer.print("0");
+        }
+        
+        printer.print(", ");
+        
+        Expression endIndex = n.getEndIndex();
+        if (endIndex != null) {
+        	endIndex.accept(this, arg);
+        } else {
+        	n.getName().accept(this, arg);
+        	printer.print(".length");
+        }
+        
+        printer.print(")");
     }
 
     public void visit(ArrayCreationExpr n, Object arg) {

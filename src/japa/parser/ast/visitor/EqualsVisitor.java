@@ -28,6 +28,7 @@ import japa.parser.ast.body.VariableDeclaratorId;
 import japa.parser.ast.expr.ArrayAccessExpr;
 import japa.parser.ast.expr.ArrayCreationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
+import japa.parser.ast.expr.ArraySliceExpr;
 import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.BinaryExpr;
 import japa.parser.ast.expr.BooleanLiteralExpr;
@@ -639,6 +640,24 @@ public class EqualsVisitor implements GenericVisitor<Boolean, Node> {
             return Boolean.FALSE;
         }
 
+        return Boolean.TRUE;
+    }
+    
+    public Boolean visit(ArraySliceExpr n1, Node arg) {
+    	ArraySliceExpr n2 = (ArraySliceExpr) arg;
+
+        if (!nodeEquals(n1.getName(), n2.getName())) {
+            return Boolean.FALSE;
+        }
+
+        if (!nodeEquals(n1.getStartIndex(), n2.getStartIndex())) {
+            return Boolean.FALSE;
+        }
+
+        if (!nodeEquals(n1.getEndIndex(), n2.getEndIndex())) {
+            return Boolean.FALSE;
+        }
+        
         return Boolean.TRUE;
     }
 
