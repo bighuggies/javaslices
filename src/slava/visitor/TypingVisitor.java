@@ -13,7 +13,7 @@ import japa.parser.ast.visitor.VoidVisitorAdapter;
 public class TypingVisitor<A> extends VoidVisitorAdapter<A> {
 	@Override
 	public void visit(ClassOrInterfaceDeclaration n, A arg) {
-		n.getSlavaScope().popScope().defineType(new Symbol(n.getName()));
+		n.getSlavaScope().defineType(new Symbol(n.getName()));
 		
 		super.visit(n, arg);
 	}
@@ -29,21 +29,21 @@ public class TypingVisitor<A> extends VoidVisitorAdapter<A> {
 	
 	@Override
 	public void visit(ConstructorDeclaration n, A arg) {
-		n.getSlavaScope().popScope().defineMember(new Symbol(n.getName()));
+		n.getSlavaScope().defineMember(new Symbol(n.getName()));
 		
 		super.visit(n, arg);
 	}
 
 	@Override
 	public void visit(MethodDeclaration n, A arg) {
-		n.getSlavaScope().popScope().defineMember(new Symbol(n.getName()));
+		n.getSlavaScope().defineMember(new Symbol(n.getName()));
 		
 		super.visit(n, arg);
 	}
 
 	@Override
 	public void visit(EnumDeclaration n, A arg) {
-		n.getSlavaScope().popScope().defineType(new Symbol(n.getName()));
+		n.getSlavaScope().defineType(new Symbol(n.getName()));
 		
 		super.visit(n, arg);
 	}

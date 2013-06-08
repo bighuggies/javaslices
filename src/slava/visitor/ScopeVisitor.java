@@ -142,16 +142,16 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 	// - Body ----------------------------------------------
 	@Override
 	public void visit(ClassOrInterfaceDeclaration n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.CLASS, n.getName());
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.CLASS, n.getName());
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(EnumDeclaration n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.ENUM, n.getName());
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.ENUM, n.getName());
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
@@ -200,17 +200,17 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(ConstructorDeclaration n, A arg) {
+		n.setSlavaScope(currentScope);
 		currentScope = currentScope.pushScope(ScopeType.CONSTRUCTOR,
 				n.getName());
-		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(MethodDeclaration n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.METHOD, n.getName());
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.METHOD, n.getName());
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
@@ -490,8 +490,8 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(BlockStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
@@ -523,8 +523,8 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(SwitchEntryStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
@@ -543,16 +543,16 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(IfStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(WhileStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
@@ -565,32 +565,32 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(DoStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(ForeachStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(ForStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(ThrowStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
@@ -603,16 +603,16 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(TryStmt n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
 	@Override
 	public void visit(CatchClause n, A arg) {
-		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		n.setSlavaScope(currentScope);
+		currentScope = currentScope.pushScope(ScopeType.LOCAL);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
