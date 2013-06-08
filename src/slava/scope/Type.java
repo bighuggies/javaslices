@@ -1,5 +1,14 @@
 package slava.scope;
 
-public interface Type {
-	public String getName();
+public class Type {
+	public final String name;
+
+	public Type(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

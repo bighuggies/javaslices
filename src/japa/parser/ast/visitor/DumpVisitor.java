@@ -828,17 +828,21 @@ public final class DumpVisitor implements VoidVisitor<Object> {
             case preDecrement:
                 printer.print("--");
                 break;
+		default:
+			break;
         }
 
         n.getExpr().accept(this, arg);
 
-        switch (n.getOperator()) {
+		switch (n.getOperator()) {
             case posIncrement:
                 printer.print("++");
                 break;
             case posDecrement:
                 printer.print("--");
                 break;
+		default:
+			break;
         }
     }
 

@@ -1,4 +1,4 @@
-package slava.scope;
+package slava.exception;
 
 public class AlreadyDefinedException extends RuntimeException {
 
