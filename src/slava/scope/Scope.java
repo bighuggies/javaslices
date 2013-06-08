@@ -10,7 +10,7 @@ import slava.exception.AlreadyDefinedException;
 public class Scope {
 
 	public static enum ScopeType {
-		GLOBAL, CLASS, METHOD, LOCAL, UNKOWN
+		GLOBAL, CLASS, ENUM, CONSTRUCTOR, METHOD, LOCAL, UNKOWN
 	}
 
 	private final Scope parent;
@@ -136,9 +136,9 @@ public class Scope {
 		System.out.print("\n");
 		
 		loopPrint(" ", indent);
-		System.out.println(this.name);
+		System.out.println(this.type + ": " + this.name);
 		loopPrint(" ", indent);
-		loopPrint("=", this.name.length());
+		loopPrint("=", this.name.length() + this.type.toString().length() + 2);
 		System.out.print("\n");
 		
 		printMap(this.types, indent);
