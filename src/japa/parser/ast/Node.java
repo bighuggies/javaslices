@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Júlio Vilmar Gesser.
+ * Copyright (C) 2007 Jï¿½lio Vilmar Gesser.
  *
  * This file is part of Java 1.5 parser and Abstract Syntax Tree.
  *
@@ -25,6 +25,7 @@ import japa.parser.ast.visitor.DumpVisitor;
 import japa.parser.ast.visitor.EqualsVisitor;
 import japa.parser.ast.visitor.GenericVisitor;
 import japa.parser.ast.visitor.VoidVisitor;
+import slava.scope.Scope;
 
 /**
  * Abstract class for all nodes of the AST.
@@ -40,6 +41,8 @@ public abstract class Node {
     private int endLine;
 
     private int endColumn;
+    
+    private Scope slavaScope;
 
     /**
      * This attribute can store additional information from semantic analysis.
@@ -194,5 +197,13 @@ public abstract class Node {
     public boolean equals(Object obj) {
         return EqualsVisitor.equals(this, (Node) obj);
     }
+
+	public Scope getSlavaScope() {
+		return slavaScope;
+	}
+
+	public void setSlavaScope(Scope slavaScope) {
+		this.slavaScope = slavaScope;
+	}
 
 }
