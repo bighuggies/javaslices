@@ -11,19 +11,19 @@ public class ResolutionVisitor<A> extends VoidVisitorAdapter<A> {
 	public void visit(AssignExpr n, A arg) {
 	}
 
-	public void visit(MethodDeclaration n, A arg) {
-		Symbol x = n.getSlavaScope().resolveType(n.getType().toString());
-
-		if (x == null)
-			throw new NotDefinedException();
-
-		if (n.getParameters() != null) {
-			for (Parameter p : n.getParameters()) {
-				Symbol z = n.getSlavaScope()
-						.resolveType(p.getType().toString());
-				if (z == null)
-					throw new NotDefinedException();
-			}
-		}
-	}
+//	public void visit(MethodDeclaration n, A arg) {
+//		Symbol x = n.getSlavaScope().resolveType(n.getType().toString());
+//
+//		if (x == null)
+//			throw new NotDefinedException();
+//
+//		if (n.getParameters() != null) {
+//			for (Parameter p : n.getParameters()) {
+//				Symbol z = n.getSlavaScope()
+//						.resolveType(p.getType().toString());
+//				if (z == null)
+//					throw new NotDefinedException();
+//			}
+//		}
+//	}
 }

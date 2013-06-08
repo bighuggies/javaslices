@@ -9,6 +9,10 @@ import slava.exception.AlreadyDefinedException;
 
 public class Scope {
 
+	public static enum ScopeType {
+		GLOBAL, CLASS, METHOD, LOCAL, UNKOWN
+	}
+
 	private final Scope parent;
 	private final Map<String, Symbol> symbols = new HashMap<String, Symbol>();
 	private final Map<String, Symbol> members = new HashMap<String, Symbol>();
@@ -18,12 +22,29 @@ public class Scope {
 
 	private final Map<String, Map> symbolTable = new HashMap<String, Map>();
 
+	private final ScopeType type;
+	private final String name;
+
 	public Scope(Scope parent) {
+		this(parent, ScopeType.UNKOWN);
+	}
+
+	public Scope(Scope parent, ScopeType type) {
+		this(parent, type, UUID.randomUUID().toString());
+	}
+
+	public Scope(Scope parent, ScopeType type, String name) {
 		this.parent = parent;
+		this.type = type;
+		this.name = name;
 
 		symbolTable.put("symbols", symbols);
 		symbolTable.put("members", members);
 		symbolTable.put("types", types);
+	}
+
+	public ScopeType getType() {
+		return type;
 	}
 
 	public Scope pushScope() {
@@ -31,7 +52,15 @@ public class Scope {
 	}
 
 	public Scope pushScope(String name) {
-		Scope newScope = new Scope(this);
+		return pushScope(ScopeType.UNKOWN, name);
+	}
+	
+	public Scope pushScope(ScopeType type) {
+		return pushScope(type, UUID.randomUUID().toString());
+	}
+	
+	public Scope pushScope(ScopeType type, String name) {
+		Scope newScope = new Scope(this, type, name);
 		this.scopes.put(name, newScope);
 		return newScope;
 	}
@@ -104,6 +133,14 @@ public class Scope {
 	}
 
 	public void dump(int indent) {
+		System.out.print("\n");
+		
+		loopPrint(" ", indent);
+		System.out.println(this.name);
+		loopPrint(" ", indent);
+		loopPrint("=", this.name.length());
+		System.out.print("\n");
+		
 		printMap(this.types, indent);
 		printMap(this.members, indent);
 		printMap(this.symbols, indent);
@@ -115,11 +152,14 @@ public class Scope {
 
 	public <A, B> void printMap(Map<A, B> map, int indent) {
 		for (B s : map.values()) {
-			for (int i = 0; i < indent; i++) {
-				System.out.print(" ");
-			}
-
+			loopPrint(" ", indent);
 			System.out.println(s.toString());
+		}
+	}
+	
+	public void loopPrint(String str, int num) {
+		for (int i = 0; i < num; i++) {
+			System.out.print(str);
 		}
 	}
 }

@@ -85,10 +85,13 @@ import slava.scope.Scope;
 import slava.scope.Symbol;
 
 public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
-	private Scope globalScope = new Scope(null);
-	private Scope currentScope = globalScope;
+	private Scope globalScope;
+	private Scope currentScope;
 
-	{
+	public ScopeVisitor(Scope root) {
+		this.globalScope = root;
+		this.currentScope = root;
+
 		globalScope.defineType(new Symbol("void"));
 		globalScope.defineType(new Symbol("int"));
 		globalScope.defineType(new Symbol("long"));
@@ -99,39 +102,44 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 	}
 
 	// - Compilation Unit ----------------------------------
-
+	@Override
 	public void visit(CompilationUnit n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(PackageDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ImportDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(TypeParameter n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(LineComment n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(BlockComment n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
 	// - Body ----------------------------------------------
-
+	@Override
 	public void visit(ClassOrInterfaceDeclaration n, A arg) {
 		currentScope = currentScope.pushScope(n.getName());
 		n.setSlavaScope(currentScope);
@@ -139,293 +147,346 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(EnumDeclaration n, A arg) {
-		currentScope = currentScope.pushScope();
+		currentScope = currentScope.pushScope(n.getName());
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(EmptyTypeDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(EnumConstantDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(AnnotationDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(AnnotationMemberDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(FieldDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(VariableDeclarator n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(VariableDeclaratorId n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ConstructorDeclaration n, A arg) {
-		currentScope = currentScope.pushScope();
+		currentScope = currentScope.pushScope(n.getName());
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(MethodDeclaration n, A arg) {
-		currentScope = currentScope.pushScope();
+		currentScope = currentScope.pushScope(n.getName());
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(Parameter n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(EmptyMemberDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(InitializerDeclaration n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(JavadocComment n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
 	// - Type ----------------------------------------------
-
+	@Override
 	public void visit(ClassOrInterfaceType n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(PrimitiveType n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ReferenceType n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(VoidType n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(WildcardType n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
 	// - Expression ----------------------------------------
-
+	@Override
 	public void visit(ArrayAccessExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ArraySliceExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ArrayCreationExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ArrayInitializerExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(AssignExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(BinaryExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(CastExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ClassExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ConditionalExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(EnclosedExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(FieldAccessExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(InstanceOfExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(StringLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(IntegerLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(LongLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(IntegerLiteralMinValueExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(LongLiteralMinValueExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(CharLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(DoubleLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(BooleanLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(NullLiteralExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(MethodCallExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(NameExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ObjectCreationExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(QualifiedNameExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ThisExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(SuperExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(UnaryExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(VariableDeclarationExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(MarkerAnnotationExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(SingleMemberAnnotationExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(NormalAnnotationExpr n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(MemberValuePair n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
 	// - Statements ----------------------------------------
-
+	@Override
 	public void visit(ExplicitConstructorInvocationStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(TypeDeclarationStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(AssertStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(BlockStmt n, A arg) {
 		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
@@ -433,88 +494,124 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(LabeledStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(EmptyStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ExpressionStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(SwitchStmt n, A arg) {
+
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(SwitchEntryStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(BreakStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(ReturnStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(IfStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(WhileStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(ContinueStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(DoStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(ForeachStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(ForStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(ThrowStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(SynchronizedStmt n, A arg) {
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
 	}
 
+	@Override
 	public void visit(TryStmt n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 
+	@Override
 	public void visit(CatchClause n, A arg) {
+		currentScope = currentScope.pushScope();
 		n.setSlavaScope(currentScope);
 		super.visit(n, arg);
+		currentScope = currentScope.popScope();
 	}
 }

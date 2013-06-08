@@ -34,169 +34,169 @@ import slava.scope.Scope;
  */
 public abstract class Node {
 
-    private int beginLine;
+	private int beginLine;
 
-    private int beginColumn;
+	private int beginColumn;
 
-    private int endLine;
+	private int endLine;
 
-    private int endColumn;
-    
-    private Scope slavaScope;
+	private int endColumn;
 
-    /**
-     * This attribute can store additional information from semantic analysis.
-     */
-    private Object data;
+	private Scope slavaScope;
 
-    public Node() {
-    }
+	/**
+	 * This attribute can store additional information from semantic analysis.
+	 */
+	private Object data;
 
-    public Node(int beginLine, int beginColumn, int endLine, int endColumn) {
-        this.beginLine = beginLine;
-        this.beginColumn = beginColumn;
-        this.endLine = endLine;
-        this.endColumn = endColumn;
-    }
+	public Node() {
+	}
 
-    /**
-     * Accept method for visitor support.
-     * 
-     * @param <R>
-     *            the type the return value of the visitor
-     * @param <A>
-     *            the type the argument passed for the visitor
-     * @param v
-     *            the visitor implementation
-     * @param arg
-     *            any value relevant for the visitor
-     * @return the result of the visit
-     */
-    public abstract <R, A> R accept(GenericVisitor<R, A> v, A arg);
+	public Node(int beginLine, int beginColumn, int endLine, int endColumn) {
+		this.beginLine = beginLine;
+		this.beginColumn = beginColumn;
+		this.endLine = endLine;
+		this.endColumn = endColumn;
+	}
 
-    /**
-     * Accept method for visitor support.
-     * 
-     * @param <A>
-     *            the type the argument passed for the visitor
-     * @param v
-     *            the visitor implementation
-     * @param arg
-     *            any value relevant for the visitor
-     */
-    public abstract <A> void accept(VoidVisitor<A> v, A arg);
+	/**
+	 * Accept method for visitor support.
+	 * 
+	 * @param <R>
+	 *            the type the return value of the visitor
+	 * @param <A>
+	 *            the type the argument passed for the visitor
+	 * @param v
+	 *            the visitor implementation
+	 * @param arg
+	 *            any value relevant for the visitor
+	 * @return the result of the visit
+	 */
+	public abstract <R, A> R accept(GenericVisitor<R, A> v, A arg);
 
-    /**
-     * Return the begin column of this node.
-     * 
-     * @return the begin column of this node
-     */
-    public final int getBeginColumn() {
-        return beginColumn;
-    }
+	/**
+	 * Accept method for visitor support.
+	 * 
+	 * @param <A>
+	 *            the type the argument passed for the visitor
+	 * @param v
+	 *            the visitor implementation
+	 * @param arg
+	 *            any value relevant for the visitor
+	 */
+	public abstract <A> void accept(VoidVisitor<A> v, A arg);
 
-    /**
-     * Return the begin line of this node.
-     * 
-     * @return the begin line of this node
-     */
-    public final int getBeginLine() {
-        return beginLine;
-    }
+	/**
+	 * Return the begin column of this node.
+	 * 
+	 * @return the begin column of this node
+	 */
+	public final int getBeginColumn() {
+		return beginColumn;
+	}
 
-    /**
-     * Use this to retrieve additional information associated to this node.
-     */
-    public final Object getData() {
-        return data;
-    }
+	/**
+	 * Return the begin line of this node.
+	 * 
+	 * @return the begin line of this node
+	 */
+	public final int getBeginLine() {
+		return beginLine;
+	}
 
-    /**
-     * Return the end column of this node.
-     * 
-     * @return the end column of this node
-     */
-    public final int getEndColumn() {
-        return endColumn;
-    }
+	/**
+	 * Use this to retrieve additional information associated to this node.
+	 */
+	public final Object getData() {
+		return data;
+	}
 
-    /**
-     * Return the end line of this node.
-     * 
-     * @return the end line of this node
-     */
-    public final int getEndLine() {
-        return endLine;
-    }
+	/**
+	 * Return the end column of this node.
+	 * 
+	 * @return the end column of this node
+	 */
+	public final int getEndColumn() {
+		return endColumn;
+	}
 
-    /**
-     * Sets the begin column of this node.
-     * 
-     * @param beginColumn
-     *            the begin column of this node
-     */
-    public final void setBeginColumn(int beginColumn) {
-        this.beginColumn = beginColumn;
-    }
+	/**
+	 * Return the end line of this node.
+	 * 
+	 * @return the end line of this node
+	 */
+	public final int getEndLine() {
+		return endLine;
+	}
 
-    /**
-     * Sets the begin line of this node.
-     * 
-     * @param beginLine
-     *            the begin line of this node
-     */
-    public final void setBeginLine(int beginLine) {
-        this.beginLine = beginLine;
-    }
+	/**
+	 * Sets the begin column of this node.
+	 * 
+	 * @param beginColumn
+	 *            the begin column of this node
+	 */
+	public final void setBeginColumn(int beginColumn) {
+		this.beginColumn = beginColumn;
+	}
 
-    /**
-     * Use this to store additional information to this node.
-     */
-    public final void setData(Object data) {
-        this.data = data;
-    }
+	/**
+	 * Sets the begin line of this node.
+	 * 
+	 * @param beginLine
+	 *            the begin line of this node
+	 */
+	public final void setBeginLine(int beginLine) {
+		this.beginLine = beginLine;
+	}
 
-    /**
-     * Sets the end column of this node.
-     * 
-     * @param endColumn
-     *            the end column of this node
-     */
-    public final void setEndColumn(int endColumn) {
-        this.endColumn = endColumn;
-    }
+	/**
+	 * Use this to store additional information to this node.
+	 */
+	public final void setData(Object data) {
+		this.data = data;
+	}
 
-    /**
-     * Sets the end line of this node.
-     * 
-     * @param endLine
-     *            the end line of this node
-     */
-    public final void setEndLine(int endLine) {
-        this.endLine = endLine;
-    }
+	/**
+	 * Sets the end column of this node.
+	 * 
+	 * @param endColumn
+	 *            the end column of this node
+	 */
+	public final void setEndColumn(int endColumn) {
+		this.endColumn = endColumn;
+	}
 
-    /**
-     * Return the String representation of this node.
-     * 
-     * @return the String representation of this node
-     */
-    @Override
-    public final String toString() {
-        DumpVisitor visitor = new DumpVisitor();
-        accept(visitor, null);
-        return visitor.getSource();
-    }
+	/**
+	 * Sets the end line of this node.
+	 * 
+	 * @param endLine
+	 *            the end line of this node
+	 */
+	public final void setEndLine(int endLine) {
+		this.endLine = endLine;
+	}
 
-    @Override
-    public final int hashCode() {
-        return toString().hashCode();
-    }
+	/**
+	 * Return the String representation of this node.
+	 * 
+	 * @return the String representation of this node
+	 */
+	@Override
+	public final String toString() {
+		DumpVisitor visitor = new DumpVisitor();
+		accept(visitor, null);
+		return visitor.getSource();
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsVisitor.equals(this, (Node) obj);
-    }
+	@Override
+	public final int hashCode() {
+		return toString().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsVisitor.equals(this, (Node) obj);
+	}
 
 	public Scope getSlavaScope() {
 		return slavaScope;
