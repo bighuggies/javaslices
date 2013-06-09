@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Júlio Vilmar Gesser.
+ * Copyright (C) 2008 Jï¿½lio Vilmar Gesser.
  * 
  * This file is part of Java 1.5 parser and Abstract Syntax Tree.
  *
@@ -48,6 +48,7 @@ import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.ArrayAccessExpr;
 import japa.parser.ast.expr.ArrayCreationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
+import japa.parser.ast.expr.ArraySliceExpr;
 import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.BinaryExpr;
 import japa.parser.ast.expr.BooleanLiteralExpr;
@@ -148,6 +149,13 @@ public abstract class GenericVisitorAdapter<R, A> implements GenericVisitor<R, A
     public R visit(ArrayAccessExpr n, A arg) {
         n.getName().accept(this, arg);
         n.getIndex().accept(this, arg);
+        return null;
+    }
+    
+    public R visit(ArraySliceExpr n, A arg) {
+        n.getName().accept(this, arg);
+        n.getStartIndex().accept(this, arg);
+        n.getEndIndex().accept(this, arg);
         return null;
     }
 
