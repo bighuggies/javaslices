@@ -93,15 +93,15 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 		this.globalScope = root;
 		this.currentScope = root;
 
-		globalScope.defineType(new Symbol("void"));
-		globalScope.defineType(new Symbol("int"));
-		globalScope.defineType(new Symbol("long"));
-		globalScope.defineType(new Symbol("float"));
-		globalScope.defineType(new Symbol("double"));
-		globalScope.defineType(new Symbol("boolean"));
-		globalScope.defineType(new Symbol("char"));
-		globalScope.defineType(new Symbol("String"));
-		globalScope.defineType(new Symbol("Object"));
+		globalScope.defineType(new Symbol("void", "void"));
+		globalScope.defineType(new Symbol("int", "int"));
+		globalScope.defineType(new Symbol("long", "long"));
+		globalScope.defineType(new Symbol("float", "float"));
+		globalScope.defineType(new Symbol("double", "double"));
+		globalScope.defineType(new Symbol("boolean", "boolean"));
+		globalScope.defineType(new Symbol("char", "char"));
+		globalScope.defineType(new Symbol("String", "String"));
+		globalScope.defineType(new Symbol("Object", "Object"));
 	}
 
 	// - Compilation Unit ----------------------------------

@@ -122,9 +122,13 @@ public class Scope {
 		return scope;
 	}
 
+	public Collection<Scope> getSuperClasses() {
+		return superClasses.values();
+	}
+
 	public Scope getTypeScope() {
 		Scope x = this;
-
+		
 		while (x.type != ScopeType.CLASS)
 			x = x.popScope();
 
@@ -149,7 +153,11 @@ public class Scope {
 			return methods.get(key);
 		}
 
-		for (Scope p : superClasses.values()) {
+		if (getTypeScope().resolveMethod(key) != null) {
+			return getTypeScope().resolveMethod(key);
+		}
+
+		for (Scope p : getTypeScope().getSuperClasses()) {
 			Symbol method = p.resolveMethod(key);
 
 			if (method != null) {
@@ -170,15 +178,19 @@ public class Scope {
 	}
 
 	public Symbol resolveField(String key) {
-		if (variables.containsKey(key)) {
-			return variables.get(key);
+		Symbol x = resolve("fields", key);
+		
+		if (x != null) {
+			return x;
 		}
 
-		if (fields.containsKey(key)) {
-			return fields.get(key);
+		if (getTypeScope() != this) {
+			if (getTypeScope().resolveField(key) != null) {
+				return getTypeScope().resolveField(key);
+			}
 		}
 
-		for (Scope p : superClasses.values()) {
+		for (Scope p : getTypeScope().getSuperClasses()) {
 			Symbol field = p.resolveField(key);
 
 			if (field != null) {
@@ -211,8 +223,8 @@ public class Scope {
 
 	public <T> T define(String table, String key, T value) {
 		if (this.resolve(table, key) != null) {
-			throw new CompileException(key + " already exists in "
-					+ table); // no shadowing
+			throw new CompileException(key + " already exists in " + table); // no
+																				// shadowing
 		}
 
 		symbolTable.get(table).put(key, value);

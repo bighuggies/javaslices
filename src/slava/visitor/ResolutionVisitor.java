@@ -126,12 +126,22 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 
 	// TODO
 	public Symbol visit(AssignExpr n, Object arg) {
-		System.out.println(n);
 		Symbol x = n.getTarget().accept(this, arg);
-		System.out.println(x);
 		Symbol y = n.getValue().accept(this, arg);
 
-		if (!x.equals(y)) {
+		if (x == null) {
+			throw new CompileException(n.getTarget() + " is not in scope");
+		}
+
+		if (x.node.getBeginLine() > n.getBeginLine()) {
+			throw new CompileException(x.name + "accessed before definition");
+		}
+		
+		if (y == null) {
+			throw new CompileException(n.getValue() + " is not in scope");
+		}
+
+		if (!x.type.name.equals(y.type.name)) {
 			throw new CompileException("Type of x does not match y");
 		}
 
@@ -144,11 +154,6 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 	}
 
 	public Symbol visit(FieldAccessExpr n, Object arg) {
-		// System.out.println("IN TYPE: " + n.getSlavaScope().getTypeScope());
-		//
-		// System.out.println("SCOPE: " + n.getScope());
-		// System.out.println("FIELD: " + n.getField());
-
 		Symbol x = n.getSlavaScope().getTypeScope().resolveField(n.getField());
 
 		if (x == null) {
@@ -197,10 +202,15 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		// TODO: is this good?
 		return n.getSlavaScope().resolveType("Object");
 	}
-	
+
 	@Override
 	public Symbol visit(NameExpr n, Object arg) {
-		System.out.println(n);
-		return n.getSlavaScope().resolveSymbol(n.getName());
+		Symbol x = n.getSlavaScope().resolveSymbol(n.getName());
+
+		if (x == null) {
+			x = n.getSlavaScope().resolveField(n.getName());
+		}
+
+		return x;
 	}
 }

@@ -16,17 +16,19 @@ public class TypingVisitor<A> extends VoidVisitorAdapter<A> {
 	public void visit(ClassOrInterfaceDeclaration n, A arg) {
 		if (n.getExtends() != null) {
 			for (ClassOrInterfaceType c : n.getExtends()) {
-				n.getSlavaScope().getEnclosedScope(n.getName()).pushSuperClass(c.getName());
+				n.getSlavaScope().getEnclosedScope(n.getName())
+						.pushSuperClass(c.getName());
 			}
 		}
 
 		if (n.getImplements() != null) {
 			for (ClassOrInterfaceType c : n.getImplements()) {
-				n.getSlavaScope().getEnclosedScope(n.getName()).pushSuperClass(c.getName());
+				n.getSlavaScope().getEnclosedScope(n.getName())
+						.pushSuperClass(c.getName());
 			}
 		}
-		
-		n.getSlavaScope().defineType(new Symbol(n.getName()));
+
+		n.getSlavaScope().defineType(new Symbol(n.getName(), n.getName(), n));
 
 		super.visit(n, arg);
 	}
@@ -34,7 +36,8 @@ public class TypingVisitor<A> extends VoidVisitorAdapter<A> {
 	@Override
 	public void visit(FieldDeclaration n, A arg) {
 		for (VariableDeclarator v : n.getVariables()) {
-			n.getSlavaScope().defineField(new Symbol(v.getId().getName()));
+			n.getSlavaScope().defineField(
+					new Symbol(v.getId().getName(), n.getType().toString(), n));
 		}
 
 		super.visit(n, arg);
@@ -56,7 +59,7 @@ public class TypingVisitor<A> extends VoidVisitorAdapter<A> {
 
 	@Override
 	public void visit(EnumDeclaration n, A arg) {
-		n.getSlavaScope().defineType(new Symbol(n.getName()));
+		n.getSlavaScope().defineType(new Symbol(n.getName(), n.getName(), n));
 
 		super.visit(n, arg);
 	}
