@@ -3,5 +3,13 @@ class Slice1 {
 
 	public Slice1() {
 		int[] newArray = array[10:40];
+		
+		for(int i : array[2:20]) {
+			// do stuff
+		}
+		
+		for(int i = 2; i < 20; i++) {
+			// do stuff
+		}
 	}
 }

@@ -3,5 +3,9 @@ class Slice2 {
 
 	public Slice2() {
 		int[] newArray = array[:40];
+		
+		for(int i : array[:40]) {
+			
+		}
 	}
 }
