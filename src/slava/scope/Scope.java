@@ -145,16 +145,16 @@ public class Scope {
 	}
 
 	public Symbol resolveMethod(String key) {
-		if (variables.containsKey(key)) {
-			return variables.get(key);
+		Symbol x = resolve("methods", key);
+		
+		if (x != null) {
+			return x;
 		}
 
-		if (methods.containsKey(key)) {
-			return methods.get(key);
-		}
-
-		if (getTypeScope().resolveMethod(key) != null) {
-			return getTypeScope().resolveMethod(key);
+		if (getTypeScope() != this) {
+			if (getTypeScope().resolveMethod(key) != null) {
+				return getTypeScope().resolveMethod(key);
+			}
 		}
 
 		for (Scope p : getTypeScope().getSuperClasses()) {
