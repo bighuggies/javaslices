@@ -154,8 +154,13 @@ public abstract class GenericVisitorAdapter<R, A> implements GenericVisitor<R, A
     
     public R visit(ArraySliceExpr n, A arg) {
         n.getName().accept(this, arg);
-        n.getStartIndex().accept(this, arg);
-        n.getEndIndex().accept(this, arg);
+        
+        Expression si = n.getStartIndex();
+        if (si != null) si.accept(this, arg);
+        
+        Expression ei = n.getEndIndex();
+        if (ei != null) ei.accept(this, arg);
+        
         return null;
     }
 

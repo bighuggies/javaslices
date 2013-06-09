@@ -28,8 +28,7 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		Symbol x = n.getSlavaScope().resolveType(n.getType());
 
 		if (x == null) {
-			throw new CompileException("Type <" + n.getType() + "> on line "
-					+ n.getBeginLine() + " not defined");
+			throw new CompileException("Type <" + n.getType() + "> on line " + n.getBeginLine() + " not defined");
 		}
 
 		return super.visit(n, arg);
@@ -39,8 +38,7 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		Symbol x = n.getSlavaScope().resolveType(n.getType());
 
 		if (x == null) {
-			throw new CompileException("Type <" + n.getType() + "> on line "
-					+ n.getBeginLine() + " not defined");
+			throw new CompileException("Type <" + n.getType() + "> on line " + n.getBeginLine() + " not defined");
 		}
 
 		return super.visit(n, arg);
@@ -50,8 +48,7 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		Symbol x = n.getSlavaScope().resolveType(n.getType());
 
 		if (x == null) {
-			throw new CompileException("Type <" + n.getType() + "> on line "
-					+ n.getBeginLine() + " not defined");
+			throw new CompileException("Type <" + n.getType() + "> on line " + n.getBeginLine() + " not defined");
 		}
 
 		return super.visit(n, arg);
@@ -64,8 +61,7 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		Symbol x = n.getSlavaScope().resolveType(n.getType());
 
 		if (x == null) {
-			throw new CompileException("Type <" + n.getType() + "> on line "
-					+ n.getBeginLine() + " not defined");
+			throw new CompileException("Type <" + n.getType() + "> on line " + n.getBeginLine() + " not defined");
 		}
 
 		return super.visit(n, arg);
@@ -75,34 +71,44 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		Symbol x = n.getIndex().accept(this, arg);
 
 		if (x == null) {
-			throw new CompileException("Array accessor type on line "
-					+ n.getBeginLine() + " not defined");
+			throw new CompileException("Array accessor type on line " + n.getBeginLine() + " not defined");
 		} else if (x.name != "int") {
-			throw new CompileException("Illegal array access on line "
-					+ n.getBeginLine() + " to array <" + n.getName() + ">");
+			throw new CompileException("Illegal array access on line " + n.getBeginLine() + " to array <" + n.getName()
+					+ ">");
 		}
 
 		return super.visit(n, arg);
 	}
 
 	public Symbol visit(ArraySliceExpr n, Object arg) {
-		Symbol x = n.getStartIndex().accept(this, arg);
-		Symbol y = n.getEndIndex().accept(this, arg);
+		Expression startIndex = n.getStartIndex();
+		Expression endIndex = n.getEndIndex();
 
-		if (x == null) {
-			throw new CompileException("Array accessor type on line "
-					+ n.getBeginLine() + " not defined");
-		} else if (x.name != "int") {
-			throw new CompileException("Illegal array access on line "
-					+ n.getBeginLine() + " to array <" + n.getName() + ">");
+		if (startIndex == null && endIndex == null) {
+			throw new CompileException("Start and end index in array slice cannot both be blank on line "
+					+ n.getBeginLine());
 		}
 
-		if (y == null) {
-			throw new CompileException("Array accessor type on line "
-					+ n.getBeginLine() + " not defined");
-		} else if (y.name != "int") {
-			throw new CompileException("Illegal array access on line "
-					+ n.getBeginLine() + " to array <" + n.getName() + ">");
+		if (startIndex != null) {
+			Symbol x = startIndex.accept(this, arg);
+
+			if (x == null) {
+				throw new CompileException("Array accessor type on line " + n.getBeginLine() + " not defined");
+			} else if (x.name != "int") {
+				throw new CompileException("Illegal array access on line " + n.getBeginLine() + " to array <"
+						+ n.getName() + ">");
+			}
+		}
+
+		if (endIndex != null) {
+			Symbol y = n.getEndIndex().accept(this, arg);
+
+			if (y == null) {
+				throw new CompileException("Array accessor type on line " + n.getBeginLine() + " not defined");
+			} else if (y.name != "int") {
+				throw new CompileException("Illegal array access on line " + n.getBeginLine() + " to array <"
+						+ n.getName() + ">");
+			}
 		}
 
 		return super.visit(n, arg);
@@ -113,11 +119,9 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 			Symbol x = e.accept(this, arg);
 
 			if (x == null) {
-				throw new CompileException("Array accessor type on line "
-						+ n.getBeginLine() + " not defined");
+				throw new CompileException("Array accessor type on line " + n.getBeginLine() + " not defined");
 			} else if (x.name != "int") {
-				throw new CompileException("Illegal array dimensions on line "
-						+ n.getBeginLine());
+				throw new CompileException("Illegal array dimensions on line " + n.getBeginLine());
 			}
 		}
 
@@ -136,7 +140,7 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		if (x.node.getBeginLine() > n.getBeginLine()) {
 			throw new CompileException(x.name + "accessed before definition");
 		}
-		
+
 		if (y == null) {
 			throw new CompileException(n.getValue() + " is not in scope");
 		}
@@ -157,9 +161,8 @@ public class ResolutionVisitor extends GenericVisitorAdapter<Symbol, Object> {
 		Symbol x = n.getSlavaScope().getTypeScope().resolveField(n.getField());
 
 		if (x == null) {
-			throw new CompileException("Field <" + n.getField() + "> on line "
-					+ n.getBeginLine() + " not defined on type <"
-					+ n.getSlavaScope().getTypeScope() + ">");
+			throw new CompileException("Field <" + n.getField() + "> on line " + n.getBeginLine()
+					+ " not defined on type <" + n.getSlavaScope().getTypeScope() + ">");
 		}
 
 		return super.visit(n, arg);

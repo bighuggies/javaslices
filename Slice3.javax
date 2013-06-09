@@ -1,0 +1,7 @@
+class Slice1 {
+	int[] array = new array[100];
+
+	public Slice1() {
+		int[] newArray = array[10:];
+	}
+}

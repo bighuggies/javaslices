@@ -101,8 +101,8 @@ public class ScopeVisitor<A> extends VoidVisitorAdapter<A> {
 		globalScope.defineType(new Symbol("boolean", "boolean"));
 		globalScope.defineType(new Symbol("char", "char"));
 		globalScope.defineType(new Symbol("String", "String"));
-		globalScope.defineType(new Symbol("Object", "Object"));
 	}
+	
 
 	// - Compilation Unit ----------------------------------
 	@Override
